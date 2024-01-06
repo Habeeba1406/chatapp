@@ -1,15 +1,23 @@
-import 'package:chatapp/components/drawer.dart';
-import 'package:chatapp/components/userTile.dart';
-import 'package:chatapp/pages/chatpage.dart';
+import 'package:chatapp/components/my_drawer.dart';
+import 'package:chatapp/components/user_tile.dart';
+import 'package:chatapp/pages/chat_page.dart';
 import 'package:chatapp/services/auth/auth_service.dart';
 import 'package:chatapp/services/chat/chat_services.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatelessWidget {
   HomePage({super.key});
+
 //chat & auth service
   final ChatService _chatService = ChatService();
   final Authservice _authservice = Authservice();
+
+  void logout() {
+    //get auth service
+    final auth = Authservice();
+    auth.sigout();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,19 +38,26 @@ class HomePage extends StatelessWidget {
     return StreamBuilder(
       stream: _chatService.getUsersStream(),
       builder: (context, snapshot) {
+        //error
         if (snapshot.hasError) {
           return const Text('Error');
         }
-
+        //loading
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const Text('Loading');
+        } else {
+          return ListView(
+              children: snapshot.data!
+                  .map<Widget>(
+                      (userData) => _buildUserListItem(userData, context))
+                  .toList());
         }
         //return list view
-        return ListView(
-            children: snapshot.data!
-                .map<Widget>(
-                    (userData) => _buildUserListItem(userData, context))
-                .toList());
+        // return ListView(
+        //     children: snapshot.data!
+        //         .map<Widget>(
+        //             (userData) => _buildUserListItem(userData, context))
+        //         .toList());
       },
     );
   }

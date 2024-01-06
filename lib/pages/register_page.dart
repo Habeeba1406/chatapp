@@ -1,9 +1,10 @@
+import 'package:chatapp/components/text_field.dart';
 import 'package:chatapp/services/auth/auth_service.dart';
-import 'package:chatapp/components/loginbutton.dart';
-import 'package:chatapp/components/textfield.dart';
+import 'package:chatapp/components/button.dart';
 import 'package:flutter/material.dart';
 
 class RegisterPage extends StatelessWidget {
+  //email &pw txt controllers
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _pwController = TextEditingController();
   final TextEditingController _confirmpwController = TextEditingController();
@@ -15,17 +16,17 @@ class RegisterPage extends StatelessWidget {
   //register method
   void register(BuildContext context) async {
     //get auth service
-    final _auth = Authservice();
-    _auth.signUpWithEmailPassword(
+    final auth = Authservice();
+
+    auth.signUpWithEmailPassword(
       _emailController.text,
       _pwController.text,
     );
 
     //pswrd match->create
-    if (_pwController == _confirmpwController.text) {
+    if (_pwController == _confirmpwController) {
       try {
-        _auth.signUpWithEmailPassword(
-            _emailController.text, _pwController.text);
+        auth.signUpWithEmailPassword(_emailController.text, _pwController.text);
       } catch (e) {
         showDialog(
             context: context,
@@ -76,7 +77,7 @@ class RegisterPage extends StatelessWidget {
               height: 30,
             ),
             //email tx
-            Mytextfield(
+            MyTextField(
               hintText: "Email",
               obscureText: false,
               controller: _emailController,
@@ -86,7 +87,7 @@ class RegisterPage extends StatelessWidget {
             ),
 
             //pw txtfld
-            Mytextfield(
+            MyTextField(
               hintText: "Password",
               obscureText: true,
               controller: _pwController,
@@ -97,7 +98,7 @@ class RegisterPage extends StatelessWidget {
             ),
 
             //confirm pw
-            Mytextfield(
+            MyTextField(
               hintText: "confirm Password",
               obscureText: true,
               controller: _confirmpwController,

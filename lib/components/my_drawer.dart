@@ -1,5 +1,5 @@
 import 'package:chatapp/services/auth/auth_service.dart';
-import 'package:chatapp/pages/settingsPage.dart';
+import 'package:chatapp/pages/setting_page.dart';
 import 'package:flutter/material.dart';
 
 class MyDrawer extends StatelessWidget {
@@ -26,7 +26,7 @@ class MyDrawer extends StatelessWidget {
                     child: Icon(
                   Icons.message,
                   color: Theme.of(context).colorScheme.primary,
-                  size: 46,
+                  size: 40,
                 )),
               ),
 
@@ -69,9 +69,10 @@ class MyDrawer extends StatelessWidget {
             child: ListTile(
               title: const Text("L O G O U T"),
               leading: const Icon(Icons.logout),
-              onTap: () {
-                logout();
-              },
+              onTap: logout,
+              // () {
+              //   logout();
+              // },
             ),
           ),
         ],
